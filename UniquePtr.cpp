@@ -24,14 +24,16 @@ UniquePtr<T>::~UniquePtr() {
 
 template<typename T>
 UniquePtr<T>& UniquePtr<T>::operator=(UniquePtr<T>&& other) noexcept {
-    this->_ptr = other->_ptr;
-    delete other->_ptr;
+    this->reset();
+    _ptr = other._ptr;
+    other._ptr = nullptr;
+    return *this;
 }
 
 template<typename T>
 UniquePtr<T>& UniquePtr<T>::operator=(T* ptr) {
-    this->_ptr = ptr;
-    delete[] ptr;
+     this->reset();
+    _ptr = ptr;
     return *this;
 }
 
